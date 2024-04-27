@@ -20,6 +20,15 @@ class GameActivity : AppCompatActivity(),View.OnClickListener{
         binding=ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val playerOneName = intent.getStringExtra("PLAYER_ONE_NAME") ?: "Player One"
+        val playerTwoName = intent.getStringExtra("PLAYER_TWO_NAME") ?: "Player Two"
+
+        var currentPlayer = playerOneName
+
+        // Update UI elements with the retrieved names
+        binding.user1.text = playerOneName
+        binding.user2.text = playerTwoName
+
         binding.btn0.setOnClickListener(this)
         binding.btn1.setOnClickListener(this)
         binding.btn2.setOnClickListener(this)
@@ -129,6 +138,8 @@ class GameActivity : AppCompatActivity(),View.OnClickListener{
         }
     }
 
+
+
     override fun onClick(v: View?) {
         gameModel?.apply {
             if(gameStatus!= GameStatus.INPROGRESS){
@@ -139,7 +150,7 @@ class GameActivity : AppCompatActivity(),View.OnClickListener{
             val clickedPos = (v?.tag as String).toInt()
             if(filledPos[clickedPos].isEmpty()){
                 filledPos[clickedPos]= currentPlayer
-                currentPlayer= if(currentPlayer=="X") "O" else "X"
+                currentPlayer= if(currentPlayer=="playerOneName") "playerTwoName" else "playerOneName"
                 checkforWinner()
                 updateGameData(this)
 

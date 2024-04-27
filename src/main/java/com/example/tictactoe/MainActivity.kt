@@ -22,17 +22,37 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun creategame(){
-       GameData.saveGameModel(
-           GameModel(
-               gameStatus = GameStatus.JOINED
-               )
-       )
-      startgame()
-    }
+//    fun creategame(){
+//       GameData.saveGameModel(
+//           GameModel(
+//               gameStatus = GameStatus.JOINED
+//               )
+//       )
+//      startgame()
+//    }
+//
+//    fun startgame(){
+//        startActivity((Intent(this,GameActivity::class.java)))
+//    }
+//}
 
-    fun startgame(){
-        startActivity((Intent(this,GameActivity::class.java)))
+    fun creategame() {
+        GameData.saveGameModel(
+            GameModel(
+                gameStatus = GameStatus.JOINED
+            )
+        )
+
+        // Start the game with player names
+        val player1Name = binding.player1.text.toString()
+        val player2Name = binding.player2.text.toString()
+
+        val intent = Intent(this, GameActivity::class.java).apply {
+            putExtra("PLAYER_ONE_NAME", player1Name)
+            putExtra("PLAYER_TWO_NAME", player2Name)
+        }
+
+        startActivity(intent)
     }
 }
 

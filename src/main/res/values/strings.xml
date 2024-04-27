@@ -2,4 +2,7 @@
     <string name="app_name">Tic-Tac-Win</string>
     <string name="Play">Play Now</string>
     <string name="Start">Start Game</string>
+    <string name="Player1">Player 1</string>
+    <string name="Player2">Player 2</string>
+    <string name="Namesenter">Enter Players</string>
 </resources>
