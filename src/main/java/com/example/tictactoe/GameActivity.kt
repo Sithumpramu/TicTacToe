@@ -8,12 +8,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.tictactoe.databinding.ActivityGameBinding
+import android.os.SystemClock
+import android.content.SharedPreferences
+import androidx.appcompat.app.AlertDialog
 
 class GameActivity : AppCompatActivity(),View.OnClickListener{
 
     lateinit var binding : ActivityGameBinding
 
     private  var gameModel:GameModel? = null
+
+//for fastest time
+    private var startTime: Long = 0
+    companion object {
+        const val SHARED_PREF_NAME = "TicTacToePrefs"
+        const val FASTEST_WINNING_TIME_KEY = "FastestWinningTime"
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +34,7 @@ class GameActivity : AppCompatActivity(),View.OnClickListener{
         val playerOneName = intent.getStringExtra("PLAYER_ONE_NAME") ?: "Player One"
         val playerTwoName = intent.getStringExtra("PLAYER_TWO_NAME") ?: "Player Two"
 
-        var currentPlayer = playerOneName
+
 
         // Update UI elements with the retrieved names
         binding.user1.text = playerOneName
@@ -92,6 +103,7 @@ class GameActivity : AppCompatActivity(),View.OnClickListener{
 
     fun startGame(){
         gameModel?.apply {
+            startTime = System.currentTimeMillis()
             updateGameData(
                 GameModel(
                     gameId = gameId,
@@ -119,6 +131,7 @@ class GameActivity : AppCompatActivity(),View.OnClickListener{
         )
 
         gameModel?.apply {
+            var gameWon = false
             for(i in WinningPos){
                 if(
                     filledPos[i[0]] == filledPos[i[1]] &&
@@ -127,15 +140,50 @@ class GameActivity : AppCompatActivity(),View.OnClickListener{
                 ){
                     gameStatus = GameStatus.FINISHED
                     winner = filledPos[i[0]]
+
+                    gameWon = true
+                    break
                 }
+            }
+
+            if (gameWon) {
+                val endTime = System.currentTimeMillis() // Record the end time
+                val duration = endTime - startTime // Calculate the game's duration
+
+                // Check for new record
+                val sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE)
+                val fastestTime = sharedPreferences.getLong(FASTEST_WINNING_TIME_KEY, Long.MAX_VALUE)
+
+                if (duration < fastestTime) {
+                    // New record, show a popup
+                    sharedPreferences.edit()
+                        .putLong(FASTEST_WINNING_TIME_KEY, duration) // Store the new record
+                        .apply()
+
+                    val durationInSeconds = duration / 1000.0
+                    val previousBestInSeconds = fastestTime / 1000.0
+                    showPopup("New Fastest Winning Time: $durationInSeconds seconds.  Previous Best: $previousBestInSeconds seconds")
+                }
+
+                updateGameData(this)
             }
 
             if(filledPos.none(){it.isEmpty()}){
                 gameStatus = GameStatus.FINISHED
             }
 
-            updateGameData(this)
         }
+    }
+
+
+    fun showPopup(message: String) {
+        val alertDialog = AlertDialog.Builder(this)
+            .setTitle("New Record")
+            .setMessage(message)
+            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+            .create()
+
+        alertDialog.show()
     }
 
 
@@ -150,7 +198,7 @@ class GameActivity : AppCompatActivity(),View.OnClickListener{
             val clickedPos = (v?.tag as String).toInt()
             if(filledPos[clickedPos].isEmpty()){
                 filledPos[clickedPos]= currentPlayer
-                currentPlayer= if(currentPlayer=="playerOneName") "playerTwoName" else "playerOneName"
+                currentPlayer= if(currentPlayer=="X") "O" else "X"
                 checkforWinner()
                 updateGameData(this)
 
