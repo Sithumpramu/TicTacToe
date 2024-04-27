@@ -47,23 +47,53 @@
           android:text="@string/Namesenter" />
 
 
-      <EditText
-          android:id="@+id/player1"
+      <LinearLayout
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="10dp"
-          android:ems="10"
-          android:inputType="text"
-          android:text="@string/Player1" />
+          android:layout_height="wrap_content">
 
-      <EditText
-          android:id="@+id/player2"
+          <ImageView
+              android:layout_width="30dp"
+              android:layout_height="wrap_content"
+              android:src="@drawable/ic_xicon"
+              android:layout_marginTop="10dp"
+              />
+
+
+          <EditText
+              android:id="@+id/player1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:layout_marginRight="10dp"
+              android:ems="10"
+              android:inputType="text"
+              android:text="@string/Player1" />
+
+
+      </LinearLayout>
+
+      <LinearLayout
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:ems="10"
-          android:layout_marginTop="2dp"
-          android:inputType="text"
-          android:text="@string/Player2" />
+          android:layout_height="wrap_content">
+
+          <ImageView
+              android:layout_width="30dp"
+              android:layout_height="40dp"
+              android:src="@drawable/ic_oicon"
+              android:layout_marginTop="5dp"/>
+
+          <EditText
+              android:id="@+id/player2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:ems="10"
+              android:layout_marginTop="2dp"
+              android:inputType="text"
+              android:text="@string/Player2" />
+
+      </LinearLayout>
+
+
 
       <Button
           android:layout_width="wrap_content"

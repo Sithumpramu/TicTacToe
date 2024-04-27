@@ -40,6 +40,9 @@ class GameActivity : AppCompatActivity(),View.OnClickListener{
         binding.user1.text = playerOneName
         binding.user2.text = playerTwoName
 
+        
+
+
         binding.btn0.setOnClickListener(this)
         binding.btn1.setOnClickListener(this)
         binding.btn2.setOnClickListener(this)
