@@ -22,19 +22,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-//    fun creategame(){
-//       GameData.saveGameModel(
-//           GameModel(
-//               gameStatus = GameStatus.JOINED
-//               )
-//       )
-//      startgame()
-//    }
-//
-//    fun startgame(){
-//        startActivity((Intent(this,GameActivity::class.java)))
-//    }
-//}
 
     fun creategame() {
         GameData.saveGameModel(

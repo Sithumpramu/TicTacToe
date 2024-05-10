@@ -113,6 +113,8 @@ class GameActivity : AppCompatActivity(),View.OnClickListener{
                     gameStatus = GameStatus.INPROGRESS
                 )
             )
+
+
         }
 
     }
@@ -204,6 +206,7 @@ class GameActivity : AppCompatActivity(),View.OnClickListener{
                 currentPlayer= if(currentPlayer=="X") "O" else "X"
                 checkforWinner()
                 updateGameData(this)
+
 
             }
 
